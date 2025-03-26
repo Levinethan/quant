@@ -142,10 +142,11 @@ endpoint26="index/fear-greed-history"
 
 ######################################### Analyst Model #############################################
 
+exchange = Exchange.BinanceLinear
+
 class Strategy(BaseStrategy):
     datasource_data = []
     candle_data = []
-    exchange = Exchange.BybitLinear
     # 技术指标参数
     ATR_PERIOD = 14  # ATR周期
     ATR_MULTIPLIER = 2.0  # ATR乘数用于计算动态止损
@@ -199,15 +200,15 @@ class Strategy(BaseStrategy):
     async def on_datasource_interval(self, strategy: StrategyTrader, topic: str, data_list):
         logging.info("datasource data {}".format(super().data_map[topic][-1]))
         model = self.data_map[topic]
-        current_price = await strategy.get_current_price(symbol=self.pair, exchange=Exchange.BinanceLinear)
-        current_pos = await strategy.position(symbol=self.pair, exchange=Exchange.BinanceLinear)
+        current_price = await strategy.get_current_price(symbol=self.pair, exchange=exchange)
+        current_pos = await strategy.position(symbol=self.pair, exchange=exchange)
         long_short_ratio = np.array(list(map(lambda c: float(c["longShortRatio"]), model)))
         avg = util.get_rolling_mean(long_short_ratio,11)
         print("long_short_ratio_avg :",avg[-1])
         
         if avg[-1] > 1.40 and current_pos.long.quantity == 0:
             try:
-                await strategy.open(exchange=Exchange.BinanceLinear,
+                await strategy.open(exchange=exchange,
                         side=OrderSide.Buy, 
                         quantity=self.quantity, 
                         symbol=self.pair, 
@@ -223,7 +224,7 @@ class Strategy(BaseStrategy):
                 logging.error(f"Failed to open long: {e}")
         elif avg[-1] > 1.40 and current_pos.long.quantity != 0:
             try:
-                await strategy.close(exchange=Exchange.BinanceLinear,
+                await strategy.close(exchange=exchange,
                         side=OrderSide.Buy,
                         quantity=abs(current_pos.long.quantity),
                         symbol=self.pair,

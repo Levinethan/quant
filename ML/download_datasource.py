@@ -5,9 +5,10 @@ import pandas as pd
 from datetime import datetime
 
 endpoints = [
-        "coinglass|1d|futures/topLongShortAccountRatio/history?exchange=Bybit&symbol=BTCUSDT&interval=1h",
+        "coinglass|1h|futures/topLongShortAccountRatio/history?exchange=Binance&symbol=BTCUSDT&interval=1h",
         #"coinglass|1d|futures/openInterest/ohlc-history?exchange=Binance&symbol=BTCUSDT&interval=1h",
-        #"cryptoquant|btc/market-data/funding-rates?window=hour&exchange=binance"
+        #"cryptoquant|btc/market-data/funding-rates?window=hour&exchange=binance",
+        "candles-5m-BTC/USDT-bybit"
 ]
 
 API_URL = "https://api.datasource.cybotrade.rs"
@@ -17,7 +18,7 @@ start_time = int(
 )
 current_quota = 0
 reset_time = 0
-all_quota = 10000
+all_quota = 100000
 for topic in endpoints:
     try:
         print(
@@ -28,7 +29,7 @@ for topic in endpoints:
             print(f"Sleep for {reset_time}")
         provider = topic.split("|")[0]
         endpoint = topic.split("|")[-1]
-        url = f"{API_URL}/{provider}/{endpoint}&start_time={start_time}&limit=50000"
+        url = f"{API_URL}/{provider}/{endpoint}&start_time={start_time}&limit=100000"
         print(f"--------------------------------")
         print(f"{url}")
         response = requests.get(
