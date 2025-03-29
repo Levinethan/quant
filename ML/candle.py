@@ -59,19 +59,21 @@ class MyStrategy(Strategy):
     async def on_backtest_complete(self, strategy: StrategyTrader):
         datasource_df = pd.DataFrame(self.datasource_data)
         candle_df = pd.DataFrame(self.candle_data)
+
         df = pd.merge(datasource_df,candle_df)
         # ---------------------- change endpoint ----------------------
-        name = re.sub(r'[^a-zA-Z0-9\s]', '', endpoint) 
+        name = re.sub(r'[^a-zA-Z0-9\s]', '', endpoint10) 
         # ---------------------- change endpoint ----------------------
         path = "./src/" + f"{provider_coinglass}-{name}.csv"
         print("path :",path)
+        df.set_index("start_time",inplace=True)
         df.to_csv(path,index=False)
 
  
 config = RuntimeConfig(
     mode=RuntimeMode.Backtest,
     datasource_topics=[
-        f"{provider_coinglass}|{endpoint}"
+        f"{provider_coinglass}|{endpoint10}"
         ],
     candle_topics=[
         "binance-linear|candle?symbol=BTCUSDT&interval="+interval
