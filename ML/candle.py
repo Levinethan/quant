@@ -25,7 +25,7 @@ endpoint="futures/liquidation/history?exchange="+exchange+"&symbol=BTCUSDT&inter
 # ------------------------------------------------- liquidation -------------------------------------------------
 
 # ------------------------------------------------- takerBuySellVolume -------------------------------------------------
-endpoint2="futures/takerBuySellVolume/history?exchange="+exchange+"&symbol=BTCUSDT&interval="+interval # leading indicator
+endpoint2="futures/takerBuySellVolume/history?exchange="+exchange+"&symbol=BTCUSDT&interval="+interval # 从2019-09-25 08:00:00开始才有数据
 endpoint3="futures/aggregatedTakerBuySellVolumeRatio/history?exchange="+exchange+"&symbol=BTCUSDT&interval="+interval # 不会用
 # ------------------------------------------------- takerBuySellVolume -------------------------------------------------
 
@@ -64,9 +64,9 @@ class MyStrategy(Strategy):
         
         df = pd.merge(datasource_df,candle_df)
         # ---------------------- change endpoint ----------------------
-        name = re.sub(r'[^a-zA-Z0-9\s]', '', endpoint2) 
+        name = re.sub(r'[^a-zA-Z0-9\s]', '', endpoint4) 
         # ---------------------- change endpoint ----------------------
-        path = "./src/" + f"{provider_coinglass}-{name}.csv"
+        path = "./src/" + f"{exchange}" + f"{provider_coinglass}-{name}.csv"
         print("path :",path)
         df.set_index("start_time",inplace=True)
         df.to_csv(path,index=False)
@@ -75,7 +75,7 @@ class MyStrategy(Strategy):
 config = RuntimeConfig(
     mode=RuntimeMode.Backtest,
     datasource_topics=[
-        f"{provider_coinglass}|{endpoint2}"
+        f"{provider_coinglass}|{endpoint4}"
         ],
     candle_topics=[
         "binance-linear|candle?symbol=BTCUSDT&interval="+interval
