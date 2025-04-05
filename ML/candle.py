@@ -41,7 +41,7 @@ endpoint8="futures/fundingRate/vol-weight-ohlc-history?symbol=BTC&interval="+int
 # ------------------------------------------------- fundingRate -------------------------------------------------
 
 # ------------------------------------------------- LongShortAccountRatio -------------------------------------------------
-endpoint9="futures/globalLongShortAccountRatio/history?exchange="+exchange+"&symbol=BTCUSDT&interval="+interval # 提供市场持仓情绪
+endpoint9="futures/globalLongShortAccountRatio/history?exchange="+exchange+"&symbol=BTCUSDT&interval="+interval # 2020-10-17 08:00:00
 endpoint10="futures/topLongShortPositionRatio/history?exchange="+exchange+"&symbol=BTCUSDT&interval="+interval # leading indicator
 # ------------------------------------------------- LongShortAccountRatio -------------------------------------------------
 ####################################################### coinglass endpoint #######################################################
@@ -64,7 +64,7 @@ class MyStrategy(Strategy):
         
         df = pd.merge(datasource_df,candle_df)
         # ---------------------- change endpoint ----------------------
-        name = re.sub(r'[^a-zA-Z0-9\s]', '', endpoint9) 
+        name = re.sub(r'[^a-zA-Z0-9\s]', '', endpoint10) 
         # ---------------------- change endpoint ----------------------
         path = "./src/" + f"{exchange}-" + f"{provider_coinglass}-{start_time}-{name}.csv"
         print("path :",path)
@@ -75,7 +75,7 @@ class MyStrategy(Strategy):
 config = RuntimeConfig(
     mode=RuntimeMode.Backtest,
     datasource_topics=[
-        f"{provider_coinglass}|{endpoint9}"
+        f"{provider_coinglass}|{endpoint10}"
         ],
     candle_topics=[
         "binance-linear|candle?symbol=BTCUSDT&interval="+interval
