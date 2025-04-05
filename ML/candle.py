@@ -35,7 +35,7 @@ endpoint5="futures/openInterest/ohlc-aggregated-history?symbol=BTC&interval="+in
 # ------------------------------------------------- openInterest -------------------------------------------------
 
 # ------------------------------------------------- fundingRate -------------------------------------------------
-endpoint6="futures/fundingRate/ohlc-history?exchange="+exchange+"&symbol=BTCUSDT&interval="+interval # lagging indicator
+endpoint6="futures/fundingRate/ohlc-history?exchange="+exchange+"&symbol=BTCUSDT&interval="+interval # 2020-03-30 08:00:00
 endpoint7="futures/fundingRate/oi-weight-ohlc-history?symbol=BTC&interval="+interval # 不会用
 endpoint8="futures/fundingRate/vol-weight-ohlc-history?symbol=BTC&interval="+interval # 不会用
 # ------------------------------------------------- fundingRate -------------------------------------------------
@@ -64,7 +64,7 @@ class MyStrategy(Strategy):
         
         df = pd.merge(datasource_df,candle_df)
         # ---------------------- change endpoint ----------------------
-        name = re.sub(r'[^a-zA-Z0-9\s]', '', endpoint6) 
+        name = re.sub(r'[^a-zA-Z0-9\s]', '', endpoint7) 
         # ---------------------- change endpoint ----------------------
         path = "./src/" + f"{exchange}-" + f"{provider_coinglass}-{name}.csv"
         print("path :",path)
@@ -75,7 +75,7 @@ class MyStrategy(Strategy):
 config = RuntimeConfig(
     mode=RuntimeMode.Backtest,
     datasource_topics=[
-        f"{provider_coinglass}|{endpoint6}"
+        f"{provider_coinglass}|{endpoint7}"
         ],
     candle_topics=[
         "binance-linear|candle?symbol=BTCUSDT&interval="+interval
