@@ -30,7 +30,7 @@ endpoint3="futures/aggregatedTakerBuySellVolumeRatio/history?exchange="+exchange
 # ------------------------------------------------- takerBuySellVolume -------------------------------------------------
 
 # ------------------------------------------------- openInterest -------------------------------------------------
-endpoint4="futures/openInterest/ohlc-history?exchange="+exchange+"&symbol=BTCUSDT&interval="+interval # lagging indicator openInterest 不能merge candle close
+endpoint4="futures/openInterest/ohlc-history?exchange="+exchange+"&symbol=BTCUSDT&interval="+interval #2020-02-27 08:00:00
 endpoint5="futures/openInterest/ohlc-aggregated-history?symbol=BTC&interval="+interval #提供市场规模、流动性、参与度和情绪的综合信息
 # ------------------------------------------------- openInterest -------------------------------------------------
 
@@ -64,9 +64,9 @@ class MyStrategy(Strategy):
         
         df = pd.merge(datasource_df,candle_df)
         # ---------------------- change endpoint ----------------------
-        name = re.sub(r'[^a-zA-Z0-9\s]', '', endpoint4) 
+        name = re.sub(r'[^a-zA-Z0-9\s]', '', endpoint6) 
         # ---------------------- change endpoint ----------------------
-        path = "./src/" + f"{exchange}" + f"{provider_coinglass}-{name}.csv"
+        path = "./src/" + f"{exchange}-" + f"{provider_coinglass}-{name}.csv"
         print("path :",path)
         df.set_index("start_time",inplace=True)
         df.to_csv(path,index=False)
@@ -75,7 +75,7 @@ class MyStrategy(Strategy):
 config = RuntimeConfig(
     mode=RuntimeMode.Backtest,
     datasource_topics=[
-        f"{provider_coinglass}|{endpoint4}"
+        f"{provider_coinglass}|{endpoint6}"
         ],
     candle_topics=[
         "binance-linear|candle?symbol=BTCUSDT&interval="+interval
