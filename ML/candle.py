@@ -16,10 +16,12 @@ provider_glassnode = "glassnode"
 interval = "1d"
 # Exchange Platform
 exchange = "Binance"
+start_time = datetime(2017, 1, 1, 0, 0, 0, tzinfo=timezone.utc)
+end_time = datetime(2025, 4, 1, 0, 0, 0, tzinfo=timezone.utc)
 
 ########################################################## coinglass endpoint ##################################################
 # ------------------------------------------------- liquidation -------------------------------------------------
-endpoint="futures/liquidation/history?exchange="+exchange+"&symbol=BTCUSDT&interval="+interval # 趋势
+endpoint="futures/liquidation/history?exchange="+exchange+"&symbol=BTCUSDT&interval="+interval #从2020-12-23 08:00:00开始才有数据
 # ------------------------------------------------- liquidation -------------------------------------------------
 
 # ------------------------------------------------- takerBuySellVolume -------------------------------------------------
@@ -59,10 +61,10 @@ class MyStrategy(Strategy):
     async def on_backtest_complete(self, strategy: StrategyTrader):
         datasource_df = pd.DataFrame(self.datasource_data)
         candle_df = pd.DataFrame(self.candle_data)
-
+        
         df = pd.merge(datasource_df,candle_df)
         # ---------------------- change endpoint ----------------------
-        name = re.sub(r'[^a-zA-Z0-9\s]', '', endpoint) 
+        name = re.sub(r'[^a-zA-Z0-9\s]', '', endpoint2) 
         # ---------------------- change endpoint ----------------------
         path = "./src/" + f"{provider_coinglass}-{name}.csv"
         print("path :",path)
@@ -73,14 +75,14 @@ class MyStrategy(Strategy):
 config = RuntimeConfig(
     mode=RuntimeMode.Backtest,
     datasource_topics=[
-        f"{provider_coinglass}|{endpoint}"
+        f"{provider_coinglass}|{endpoint2}"
         ],
     candle_topics=[
         "binance-linear|candle?symbol=BTCUSDT&interval="+interval
         ],
     active_order_interval=1,
-    start_time=datetime(2017, 1, 1, 0, 0, 0, tzinfo=timezone.utc),
-    end_time=datetime(2025, 4, 1, 0, 0, 0, tzinfo=timezone.utc),
+    start_time=start_time,
+    end_time=end_time,
     data_count=15000,
     api_key="yabyRpmCIUkfFekmvSzCuoBHGz8uWkPIOWthlRUxREJVwXt3",
     api_secret="hiTXS8iyenJSJUivJ4Vw1C2e6zXRIZm5k6fU1Y6M1V90Ngtkf6hArUhREbAAdw76O4CQMTEP"
