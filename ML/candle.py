@@ -62,7 +62,7 @@ class MyStrategy(Strategy):
 
         df = pd.merge(datasource_df,candle_df)
         # ---------------------- change endpoint ----------------------
-        name = re.sub(r'[^a-zA-Z0-9\s]', '', endpoint10) 
+        name = re.sub(r'[^a-zA-Z0-9\s]', '', endpoint) 
         # ---------------------- change endpoint ----------------------
         path = "./src/" + f"{provider_coinglass}-{name}.csv"
         print("path :",path)
@@ -73,14 +73,14 @@ class MyStrategy(Strategy):
 config = RuntimeConfig(
     mode=RuntimeMode.Backtest,
     datasource_topics=[
-        f"{provider_coinglass}|{endpoint10}"
+        f"{provider_coinglass}|{endpoint}"
         ],
     candle_topics=[
         "binance-linear|candle?symbol=BTCUSDT&interval="+interval
         ],
     active_order_interval=1,
-    start_time=datetime(2020, 1, 1, 0, 0, 0, tzinfo=timezone.utc),
-    end_time=datetime(2025, 1, 1, 0, 0, 0, tzinfo=timezone.utc),
+    start_time=datetime(2017, 1, 1, 0, 0, 0, tzinfo=timezone.utc),
+    end_time=datetime(2025, 4, 1, 0, 0, 0, tzinfo=timezone.utc),
     data_count=15000,
     api_key="yabyRpmCIUkfFekmvSzCuoBHGz8uWkPIOWthlRUxREJVwXt3",
     api_secret="hiTXS8iyenJSJUivJ4Vw1C2e6zXRIZm5k6fU1Y6M1V90Ngtkf6hArUhREbAAdw76O4CQMTEP"
