@@ -35,7 +35,7 @@ crytoquant_interval = "hour"
 # 数据商目前3家
 provider="coinglass"
 # 交易所5家
-exchange="Bybit"
+exchange="Binance"
 
 ################################################# 666 ##################################################################################
 # ------------------------------------------------- liquidation -------------------------------------------------
@@ -178,7 +178,7 @@ class Strategy(BaseStrategy):
     COMMISSION_PCT = 0.005  # 手续费
     # 总交易成本（滑点+手续费）为千分之二
     total_pnl = 0.0
-    quantity = 0.031
+    quantity = 0.01
     start_time = datetime.utcnow()
     entry_time = datetime.now(pytz.timezone("UTC"))
     pair = Symbol(base="BTC", quote="USDT")
@@ -224,12 +224,14 @@ class Strategy(BaseStrategy):
                 logging.error(f"Failed to open long: {e}")
         elif avg[-1] > 1.40 and current_pos.long.quantity != 0:
             try:
-                await strategy.close(exchange=exchange,
-                        side=OrderSide.Buy,
-                        quantity=abs(current_pos.long.quantity),
-                        symbol=self.pair,
-                        is_hedge_mode=False
-                         )
+                await strategy.close(
+                    exchange=self.exchange,
+                    side=Order.Buy,
+                    quantity=current_pos.long.quantity,
+                    symbol=self.pair,
+                    is_hedge_mode=False
+                    )
+                        
                  # 实盘Pnl 计算
                 pnl = (current_price - current_pos.long.avg_price) * abs(current_pos.long.quantity)
                 self.total_pnl += pnl
