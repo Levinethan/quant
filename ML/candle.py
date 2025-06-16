@@ -13,7 +13,7 @@ provider_crytoquant = "cryptoquant"
 provider_glassnode = "glassnode"
 
 # Time interval
-interval = "1d"
+interval = "1m"
 # Exchange Platform
 exchange = "Binance"
 start_time = datetime(2017, 1, 1, 0, 0, 0, tzinfo=timezone.utc)
@@ -75,7 +75,7 @@ class MyStrategy(Strategy):
 config = RuntimeConfig(
     mode=RuntimeMode.Backtest,
     datasource_topics=[
-        f"{provider_coinglass}|{endpoint10}"
+        #f"{provider_coinglass}|{endpoint10}"
         ],
     candle_topics=[
         "binance-linear|candle?symbol=BTCUSDT&interval="+interval
@@ -84,7 +84,7 @@ config = RuntimeConfig(
     start_time=start_time,
     end_time=end_time,
     data_count=15000,
-    api_key="yabyRpmCIUkfFekmvSzCuoBHGz8uWkPIOWthlRUxREJVwXt3",
+    api_key="CBfBYegqTPaE8qJukLTaBHgt9prjnZmR6Eqtv1rllbxgIdOy",
     api_secret="hiTXS8iyenJSJUivJ4Vw1C2e6zXRIZm5k6fU1Y6M1V90Ngtkf6hArUhREbAAdw76O4CQMTEP"
 )
  
