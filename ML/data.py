@@ -206,7 +206,7 @@ class Strategy(BaseStrategy):
         avg = util.get_rolling_mean(long_short_ratio,11)
         print("long_short_ratio_avg :",avg[-1])
         
-        if avg[-1] > 1.40 and current_pos.long.quantity == 0:
+        if avg[-1] >= 0.85 and current_pos.long.quantity == 0:
             try:
                 await strategy.open(exchange=exchange,
                         side=OrderSide.Buy, 
@@ -222,7 +222,7 @@ class Strategy(BaseStrategy):
                 )
             except Exception as e:
                 logging.error(f"Failed to open long: {e}")
-        elif avg[-1] > 1.40 and current_pos.long.quantity != 0:
+        elif avg[-1] < 0.85 and current_pos.long.quantity != 0:
             try:
                 await strategy.close(
                     exchange=self.exchange,
