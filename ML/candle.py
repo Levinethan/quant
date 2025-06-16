@@ -13,11 +13,11 @@ provider_crytoquant = "cryptoquant"
 provider_glassnode = "glassnode"
 
 # Time interval
-interval = "1m"
+interval = "1d"
 # Exchange Platform
 exchange = "Binance"
-start_time = datetime(2017, 1, 1, 0, 0, 0, tzinfo=timezone.utc)
-end_time = datetime(2025, 4, 1, 0, 0, 0, tzinfo=timezone.utc)
+start_time = datetime(2020, 10, 18, 0, 0, 0, tzinfo=timezone.utc)
+end_time = datetime(2025, 6, 1, 0, 0, 0, tzinfo=timezone.utc)
 
 ########################################################## coinglass endpoint ##################################################
 # ------------------------------------------------- liquidation -------------------------------------------------
@@ -52,7 +52,7 @@ class MyStrategy(Strategy):
     candle_data = []
     async def on_datasource_interval(self, strategy, topic, data_list):
         model = self.data_map[topic]
-        #long_short_ratio = np.array(list(map(lambda c: float(c["longShortRatio"]), model)))
+        long_short_ratio = np.array(list(map(lambda c: float(c["longShortRatio"]), model)))
         self.datasource_data.append(super().data_map[topic][-1])
  
     async def on_candle_closed(self, strategy, topic, symbol):
@@ -75,7 +75,7 @@ class MyStrategy(Strategy):
 config = RuntimeConfig(
     mode=RuntimeMode.Backtest,
     datasource_topics=[
-        #f"{provider_coinglass}|{endpoint10}"
+        f"{provider_coinglass}|{endpoint10}"
         ],
     candle_topics=[
         "binance-linear|candle?symbol=BTCUSDT&interval="+interval
