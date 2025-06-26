@@ -21,6 +21,7 @@ async def main():
         end_time=datetime(year=2025, month=1, day=1, tzinfo=timezone.utc)
     )
     df = pd.DataFrame(data)
+    df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
     print(df)
     df.to_csv(f"src/{TOPIC.replace('|', '_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv",index=False)
     
