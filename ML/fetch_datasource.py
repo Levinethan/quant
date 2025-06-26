@@ -9,10 +9,14 @@ from dotenv import load_dotenv
 load_dotenv()
 API_KEY = "CBfBYegqTPaE8qJukLTaBHgt9prjnZmR6Eqtv1rllbxgIdOy"
 
-# ------------------------------------------------------------- Coinglass -------------------------------------------------------------
+# ------------------------------------------------------------- Exchange -------------------------------------------------------------
+TOPIC = 'binance-linear|candle?symbol=BTCUSDT&interval=1d'
 # TOPIC = 'bybit-linear|candle?symbol=BTCUSDT&interval=1d'
+# TOPIC = 'bitget-linear|candle?symbol=BTCUSDT&interval=1d'
+# TOPIC = 'okx-linear|candle?symbol=BTCUSDT&interval=1d'
+# ------------------------------------------------------------- Coinglass -------------------------------------------------------------
 # TOPIC = 'coinglass|coinbase-premium-index?interval=1h'
-TOPIC = 'coinglass|futures/top-long-short-account-ratio/history?exchange=Binance&symbol=BTCUSDT&interval=1d'
+# TOPIC = 'coinglass|futures/top-long-short-account-ratio/history?exchange=Binance&symbol=BTCUSDT&interval=1d'
 
 # ------------------------------------------------------------- Coinglass -------------------------------------------------------------
 
