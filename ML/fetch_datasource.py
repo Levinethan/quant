@@ -22,7 +22,7 @@ async def main():
     )
     df = pd.DataFrame(data)
     print(df)
-    df.to_csv(f"output/{TOPIC.replace('|', '_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv")
+    df.to_csv(f"src/{TOPIC.replace('|', '_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv",index=False)
     
 
 asyncio.run(main())
