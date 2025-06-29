@@ -10,7 +10,7 @@ load_dotenv()
 API_KEY = "CBfBYegqTPaE8qJukLTaBHgt9prjnZmR6Eqtv1rllbxgIdOy"
 
 # ------------------------------------------------------------- Exchange -------------------------------------------------------------
-TOPIC = 'binance-linear|candle?symbol=BTCUSDT&interval=1d'
+#TOPIC = 'binance-linear|candle?symbol=BTCUSDT&interval=1d'
 # TOPIC = 'bybit-linear|candle?symbol=BTCUSDT&interval=1d'
 # TOPIC = 'bitget-linear|candle?symbol=BTCUSDT&interval=1d'
 # TOPIC = 'okx-linear|candle?symbol=BTCUSDT&interval=1d'
@@ -21,7 +21,7 @@ TOPIC = 'binance-linear|candle?symbol=BTCUSDT&interval=1d'
 # ------------------------------------------------------------- Coinglass -------------------------------------------------------------
 
 # ------------------------------------------------------------- Cryptoquant -----------------------------------------------------------
-# cryptoquant_endpoint1 = 'cryptoquant|eth/market-data/coinbase-premium-index?window=hour&exchange=binance'
+TOPIC = 'cryptoquant|eth/market-data/coinbase-premium-index?window=hour'
 # cryptoquant_endpoint2 = 'cryptoquant|btc/inter-entity-flows/miner-to-miner?from_miner=f2pool&to_miner=all_miner&window=hour'
 # ------------------------------------------------------------- Cryptoquant -----------------------------------------------------------
 
