@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from dotenv import load_dotenv
 
 load_dotenv()
-API_KEY = "CBfBYegqTPaE8qJukLTaBHgt9prjnZmR6Eqtv1rllbxgIdOy"
+API_KEY = "3FOSdsLW7nQmT8X7a2nRFkBEIwnsQnkjauet8IdBzKB2QDN0"
 
 # ------------------------------------------------------------- Exchange -------------------------------------------------------------
 #TOPIC = 'binance-linear|candle?symbol=BTCUSDT&interval=1d'
@@ -22,7 +22,7 @@ API_KEY = "CBfBYegqTPaE8qJukLTaBHgt9prjnZmR6Eqtv1rllbxgIdOy"
 
 # ------------------------------------------------------------- Cryptoquant -----------------------------------------------------------
 TOPIC = 'cryptoquant|eth/market-data/coinbase-premium-index?window=hour'
-# cryptoquant_endpoint2 = 'cryptoquant|btc/inter-entity-flows/miner-to-miner?from_miner=f2pool&to_miner=all_miner&window=hour'
+# TOPIC = 'cryptoquant|btc/inter-entity-flows/miner-to-miner?from_miner=f2pool&to_miner=all_miner&window=hour'
 # ------------------------------------------------------------- Cryptoquant -----------------------------------------------------------
 
 # ------------------------------------------------------------- Glassnode -------------------------------------------------------------
