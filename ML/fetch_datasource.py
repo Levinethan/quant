@@ -16,12 +16,12 @@ API_KEY = "3FOSdsLW7nQmT8X7a2nRFkBEIwnsQnkjauet8IdBzKB2QDN0"
 # TOPIC = 'okx-linear|candle?symbol=BTCUSDT&interval=1d'
 # ------------------------------------------------------------- Coinglass -------------------------------------------------------------
 # TOPIC = 'coinglass|coinbase-premium-index?interval=1h'
-# TOPIC = 'coinglass|futures/top-long-short-account-ratio/history?exchange=Binance&symbol=BTCUSDT&interval=1d'
+TOPIC = 'coinglass|futures/top-long-short-account-ratio/history?exchange=Binance&symbol=BTCUSDT&interval=1d'
 
 # ------------------------------------------------------------- Coinglass -------------------------------------------------------------
 
 # ------------------------------------------------------------- Cryptoquant -----------------------------------------------------------
-TOPIC = 'cryptoquant|eth/market-data/coinbase-premium-index?window=hour'
+# TOPIC = 'cryptoquant|eth/market-data/coinbase-premium-index?window=hour'
 # TOPIC = 'cryptoquant|btc/inter-entity-flows/miner-to-miner?from_miner=f2pool&to_miner=all_miner&window=hour'
 # ------------------------------------------------------------- Cryptoquant -----------------------------------------------------------
 
@@ -35,8 +35,8 @@ async def main():
     data = await cybotrade_datasource.query_paginated(
         api_key=API_KEY, 
         topic=TOPIC, 
-        start_time=datetime(year=2023, month=1, day=1, tzinfo=timezone.utc),
-        end_time=datetime(year=2025, month=6, day=1, tzinfo=timezone.utc)
+        start_time=datetime(year=2021, month=1, day=1, tzinfo=timezone.utc),
+        end_time=datetime(year=2024, month=12, day=1, tzinfo=timezone.utc)
     )
     df = pd.DataFrame(data)
     df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
