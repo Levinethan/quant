@@ -35,8 +35,8 @@ async def main():
     data = await cybotrade_datasource.query_paginated(
         api_key=API_KEY, 
         topic=TOPIC, 
-        start_time=datetime(year=2021, month=1, day=1, tzinfo=timezone.utc),
-        end_time=datetime(year=2024, month=12, day=1, tzinfo=timezone.utc)
+        start_time=datetime(year=2025, month=1, day=1, tzinfo=timezone.utc),
+        end_time=datetime(year=2025, month=6, day=30, tzinfo=timezone.utc)
     )
     df = pd.DataFrame(data)
     df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
