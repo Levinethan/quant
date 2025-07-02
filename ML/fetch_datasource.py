@@ -9,20 +9,73 @@ from dotenv import load_dotenv
 load_dotenv()
 API_KEY = "3FOSdsLW7nQmT8X7a2nRFkBEIwnsQnkjauet8IdBzKB2QDN0"
 
+coinglass_interval = 'h'
+crypto_interval = 'day'
+
+under_asset = 'btc'
+
 # ------------------------------------------------------------- Exchange -------------------------------------------------------------
-TOPIC = 'binance-linear|candle?symbol=BTCUSDT&interval=1d'
+# OPIC = 'binance-linear|candle?symbol=BTCUSDT&interval=1d'
 # TOPIC = 'bybit-linear|candle?symbol=BTCUSDT&interval=1d'
 # TOPIC = 'bitget-linear|candle?symbol=BTCUSDT&interval=1d'
 # TOPIC = 'okx-linear|candle?symbol=BTCUSDT&interval=1d'
 # ------------------------------------------------------------- Coinglass -------------------------------------------------------------
 # TOPIC = 'coinglass|coinbase-premium-index?interval=1h'
 # TOPIC = 'coinglass|futures/top-long-short-account-ratio/history?exchange=Binance&symbol=BTCUSDT&interval=1d'
-
+# TOPIC = 'coinglass|futures/hyperliquid/whale-alert' failed
+# TOPIC = 'coinglass|futures/taker-buy-sell-volume/history?exchange=Binance&symbol=BTC&range=h1&interval=1d'
+# TOPIC = ''
 # ------------------------------------------------------------- Coinglass -------------------------------------------------------------
 
 # ------------------------------------------------------------- Cryptoquant -----------------------------------------------------------
-# TOPIC = 'cryptoquant|eth/market-data/coinbase-premium-index?window=hour'
-# TOPIC = 'cryptoquant|btc/inter-entity-flows/miner-to-miner?from_miner=f2pool&to_miner=all_miner&window=hour'
+
+# TOPIC = 'cryptoquant|'+under_asset+'/inter-entity-flows/miner-to-miner?from_miner=f2pool&to_miner=all_miner&window=hour'
+# TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/reserve?exchange=binance&window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/netflow?exchange=binance&window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/inflow?exchange=binance&window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/outflow?exchange=binance&window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/transactions-count?exchange=binance&window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/addresses-count?exchange=binance&window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/in-house-flow?exchange=binance&window='+crypto_interval
+
+
+#TOPIC = 'cryptoquant|'+under_asset+'/flow-indicator/mpi?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/flow-indicator/exchange-shutdown-index?exchange=binance&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/flow-indicator/exchange-whale-ratio?exchange=binance&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/flow-indicator/fund-flow-ratio?exchange=binance&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/flow-indicator/stablecoins-ratio?exchange=binance&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/flow-indicator/exchange-inflow-age-distribution?exchange=binance&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/flow-indicator/exchange-inflow-supply-distribution?exchange=binance&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/flow-indicator/exchange-inflow-cdd?exchange=binance&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/flow-indicator/exchange-supply-ratio?exchange=binance&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/flow-indicator/miner-supply-ratio?miner=f2pool&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/flow-indicator/bank-supply-ratio?bank=binance_pegged&window='+crypto_interval
+
+
+# TOPIC = 'cryptoquant|'+under_asset+'/network-data/utxo-count?window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/network-data/fees?window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/network-data/supply?window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/network-data/transactions-count?window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/network-data/addresses-count?window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/network-data/tokens-transferred?window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/network-data/block-bytes?window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/network-data/block-count?window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/network-data/block-interval?window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/network-data/fees-transaction?window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/network-data/difficulty?window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/network-data/hashrate?window='+crypto_interval
+
+
+# TOPIC = 'cryptoquant|'+under_asset+'/network-data/?window='+crypto_interval
+
+# TOPIC = 'cryptoquant|'+under_asset+'/market-data/capitalization?window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/market-data/open-interest?exchange=binance&window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/market-data/funding-rates?exchange=binance&window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/market-data/taker-buy-sell-stats?exchange=binance&window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/market-data/liquidations?exchange=binance&window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/market-data/coinbase-premium-index?window='+crypto_interval
+
+
 # ------------------------------------------------------------- Cryptoquant -----------------------------------------------------------
 
 # ------------------------------------------------------------- Glassnode -------------------------------------------------------------
