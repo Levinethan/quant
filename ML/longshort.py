@@ -26,8 +26,8 @@ import webbrowser
 import pytz
 
 # 画地为牢 
-start_time = datetime(2023, 7, 10, 0, 0, 0, tzinfo=timezone.utc)
-end_time = datetime(2024, 9, 28, 0, 0, 0, tzinfo=timezone.utc)
+start_time = datetime(2022, 7, 10, 0, 0, 0, tzinfo=timezone.utc)
+end_time = datetime(2025, 1, 1, 0, 0, 0, tzinfo=timezone.utc)
 # 选择频率
 interval="1h"
 crytoquant_interval = "hour"
@@ -202,11 +202,11 @@ class Strategy(BaseStrategy):
         model = self.data_map[topic]
         current_price = await strategy.get_current_price(symbol=self.pair, exchange=exchange)
         current_pos = await strategy.position(symbol=self.pair, exchange=exchange)
-        long_short_ratio = np.array(list(map(lambda c: float(c["longShortRatio"]), model)))
-        avg = util.get_rolling_mean(long_short_ratio,11)
+        long_short_ratio = np.array(list(map(lambda c: float(c["top_account_long_short_ratio"]), model)))
+        avg = util.get_rolling_mean(long_short_ratio,5)
         print("long_short_ratio_avg :",avg[-1])
         
-        if avg[-1] >= 1.24 and current_pos.long.quantity == 0:
+        if avg[-1] >= 0.5 and current_pos.long.quantity == 0:
             try:
                 await strategy.open(exchange=exchange,
                         side=OrderSide.Buy, 
@@ -222,7 +222,7 @@ class Strategy(BaseStrategy):
                 )
             except Exception as e:
                 logging.error(f"Failed to open long: {e}")
-        elif avg[-1] <= 1.24 and current_pos.long.quantity != 0:
+        elif avg[-1] <= 0.50 and current_pos.long.quantity != 0:
             try:
                 await strategy.close(
                     exchange=self.exchange,
@@ -256,9 +256,9 @@ config = RuntimeConfig(
             mode=RuntimeMode.LiveTestnet,
             # ---------------------- change endpoint ----------------------
             datasource_topics=[
-                    "coinglass|futures/topLongShortAccountRatio/history?exchange=Binance&symbol=BTCUSDT&interval=1m"
+                    'coinglass|futures/top-long-short-account-ratio/history?exchange=Binance&symbol=BTCUSDT&interval=1m'
                 ],
-            candle_topics=["binance-linear|candle?symbol=BTCUSDT&interval=1m"],
+            candle_topics=[],
             # ---------------------- change endpoint ----------------------
             active_order_interval=1,
             initial_capital=10000.0,
@@ -266,7 +266,7 @@ config = RuntimeConfig(
             start_time=start_time,
             end_time=end_time,
             data_count=1500,
-            api_key="CBfBYegqTPaE8qJukLTaBHgt9prjnZmR6Eqtv1rllbxgIdOy",
+            api_key="3FOSdsLW7nQmT8X7a2nRFkBEIwnsQnkjauet8IdBzKB2QDN0",
             api_secret="hiTXS8iyenJSJUivJ4Vw1C2e6zXRIZm5k6fU1Y6M1V90Ngtkf6hArUhREbAAdw76O4CQMTEP"
         )
 

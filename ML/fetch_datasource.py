@@ -24,7 +24,26 @@ under_asset = 'btc'
 # TOPIC = 'coinglass|futures/top-long-short-account-ratio/history?exchange=Binance&symbol=BTCUSDT&interval=1d'
 # TOPIC = 'coinglass|futures/hyperliquid/whale-alert' failed
 # TOPIC = 'coinglass|futures/taker-buy-sell-volume/history?exchange=Binance&symbol=BTC&range=h1&interval=1d'
-# TOPIC = ''
+# TOPIC = 'coinglass|futures/liquidation/history?exchange=Binance&symbol=BTCUSDT&interval=1d'
+# TOPIC = 'coinglass|futures/liquidation/aggregated-history?exchange_list=Binance&symbol=BTC&interval=1d'
+
+
+
+# --------------------------------------------- No work ----------------------------------------------------------
+# TOPIC = 'coinglass|hk-etf/bitcoin/flow-history'
+# TOPIC = 'coinglass|exchange/chain/tx/list'
+# TOPIC = 'coinglass|exchange/assets?exchange=Binance'
+# TOPIC = 'coinglass|option/max-pain?symbol=BTC&exchange=Deribit'
+# TOPIC = 'coinglass|option/info?symbol=BTC'
+# TOPIC = 'coinglass|option/exchange-oi-history?symbol=BTC&unit=USD&range=h1'
+# TOPIC = 'coinglass|option/exchange-vol-history?symbol=BTC&unit=USD'
+# TOPIC = 'coinglass|hyperliquid/whale-position'
+# TOPIC = 'coinglass|futures/orderbook/large-limit-order?exchange=Binance&symbol=BTCUSDT'
+# TOPIC = 'coinglass|futures/orderbook/history?exchange=Binance&symbol=BTCUSDT&interval=1h&limit=1'
+# TOPIC = 'coinglass|futures/liquidation/coin-list?exchange=Binance'
+# TOPIC = 'coinglass|futures/liquidation/order?exchange=Binance&symbol=BTC&min_liquidation_amount=10000'
+# TOPIC = 'coinglass|futures/liquidation/map?exchange=Binance&symbol=BTCUSDT&range=1d'
+TOPIC = ''
 # ------------------------------------------------------------- Coinglass -------------------------------------------------------------
 
 # ------------------------------------------------------------- Cryptoquant -----------------------------------------------------------
