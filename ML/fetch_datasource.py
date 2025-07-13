@@ -101,7 +101,8 @@ under_asset = 'btc'
 # TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/median-transaction-value?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/transactions-count?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/utxo-count?window='+crypto_interval
-TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/pnl-utxo?window=day'
+# TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/pnl-utxo?window='+crypto_interval
+TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/utxo-count-supply-distribution?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/fees?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/supply?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/block-count?window='+crypto_interval
