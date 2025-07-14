@@ -278,15 +278,46 @@ async def fetch_price_data_validation():
     df.to_csv(path,index=False)
 
 
+def merge_and_save(cryptoquant_path, price_path, output_path):
+    import pandas as pd
+    # 读取数据
+    df_cryptoquant = pd.read_csv(cryptoquant_path)
+    df_price = pd.read_csv(price_path)
+    # 只保留价格数据的 start_time 和 close
+    close_col = None
+    for col in ['close', 'close_price', 'price', 'c']:
+        if col in df_price.columns:
+            close_col = col
+            break
+    if close_col is None:
+        raise ValueError(f"{price_path} 未找到收盘价列")
+    df_price = df_price[['start_time', close_col]].rename(columns={close_col: 'close'})
+    # 确保 start_time 为 datetime
+    df_cryptoquant['start_time'] = pd.to_datetime(df_cryptoquant['start_time'])
+    df_price['start_time'] = pd.to_datetime(df_price['start_time'])
+    # 合并
+    df_merged = pd.merge(df_cryptoquant, df_price, on='start_time', how='left')
+    # 保存
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    df_merged.to_csv(output_path, index=False)
+    print(f"✅ 合并完成: {output_path}")
 
 async def main():
     # 测试集
     await fetch_cryptoquant_data()
     await fetch_price_data()
+    cryptoquant_test_path = f"src/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
+    price_test_path = f"src/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
+    output_test_path = f"output/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_merged.csv"
+    merge_and_save(cryptoquant_test_path, price_test_path, output_test_path)
+
     # 验证集
     await fetch_validation_set()
     await fetch_price_data_validation()
-    
+    cryptoquant_val_path = f"src/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val.csv"
+    price_val_path = f"validation_sets/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val.csv"
+    output_val_path = f"output/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val_merged.csv"
+    merge_and_save(cryptoquant_val_path, price_val_path, output_val_path)
 
 asyncio.run(main())
 
