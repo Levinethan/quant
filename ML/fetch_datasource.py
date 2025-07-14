@@ -10,7 +10,7 @@ load_dotenv()
 API_KEY = "3FOSdsLW7nQmT8X7a2nRFkBEIwnsQnkjauet8IdBzKB2QDN0"
 
 coinglass_interval = '15m'
-crypto_interval = 'hour'
+crypto_interval = 'day'
 exchange = 'binance'
 under_asset = 'btc'
 
@@ -21,7 +21,7 @@ under_asset = 'btc'
 # TOPIC = 'okx-linear|candle?symbol=BTCUSDT&interval=1d'
 # ------------------------------------------------------------- Coinglass -------------------------------------------------------------
 # TOPIC = 'coinglass|coinbase-premium-index?interval=1h'
-TOPIC = 'coinglass|futures/top-long-short-account-ratio/history?exchange=Binance&symbol=BTCUSDT&interval=1h'
+# TOPIC = 'coinglass|futures/top-long-short-account-ratio/history?exchange=Binance&symbol=BTCUSDT&interval=15m'
 # TOPIC = 'coinglass|futures/hyperliquid/whale-alert' failed
 # TOPIC = 'coinglass|futures/taker-buy-sell-volume/history?exchange=Binance&symbol=BTC&range=h1&interval=1d'
 # TOPIC = 'coinglass|futures/liquidation/history?exchange=Binance&symbol=BTCUSDT&interval=1d'
@@ -197,7 +197,7 @@ TOPIC = 'coinglass|futures/top-long-short-account-ratio/history?exchange=Binance
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/funding-rates?exchange='+exchange+'&window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/taker-buy-sell-stats?exchange='+exchange+'&window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/liquidations?exchange='+exchange+'&window='+crypto_interval
-# TOPIC = 'cryptoquant|'+under_asset+'/market-data/coinbase-premium-index?window='+crypto_interval
+TOPIC = 'cryptoquant|'+under_asset+'/market-data/coinbase-premium-index?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/ohlcv?exchange='+exchange+'&window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/price?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/volatility?window='+crypto_interval
@@ -215,13 +215,27 @@ TOPIC = 'coinglass|futures/top-long-short-account-ratio/history?exchange=Binance
 
 
 # ------------------------------------------------------------- Glassnode -------------------------------------------------------------
-
+async def fetch_validation_set():
+    validation_start = datetime(year=2024, month=12, day=30, tzinfo=timezone.utc)
+    validation_end = datetime.now(timezone.utc)
+    data = await cybotrade_datasource.query_paginated(
+        api_key=API_KEY,
+        topic=TOPIC,
+        start_time=validation_start,
+        end_time=validation_end
+    )
+    df = pd.DataFrame(data)
+    df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
+    print(df)
+    path = f"validation_sets/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val.csv"
+    df.to_csv(path, index=False)
 
 async def main():
+    # 测试集
     data = await cybotrade_datasource.query_paginated(
         api_key=API_KEY, 
         topic=TOPIC, 
-        start_time=datetime(year=2024, month=1, day=1, tzinfo=timezone.utc),
+        start_time=datetime(year=2021, month=1, day=1, tzinfo=timezone.utc),
         end_time=datetime(year=2024, month=12, day=30, tzinfo=timezone.utc)
     )
     df = pd.DataFrame(data)
@@ -229,6 +243,9 @@ async def main():
     print(df)
     path = f"src/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
     df.to_csv(path,index=False)
+
+    # 验证集
+    await fetch_validation_set()
     
 
 asyncio.run(main())
