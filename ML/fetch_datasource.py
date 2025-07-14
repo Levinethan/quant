@@ -5,20 +5,24 @@ import asyncio
 import cybotrade_datasource
 from datetime import datetime, timezone
 from dotenv import load_dotenv
-
+import logging
 load_dotenv()
 API_KEY = "3FOSdsLW7nQmT8X7a2nRFkBEIwnsQnkjauet8IdBzKB2QDN0"
 
-coinglass_interval = '15m'
-crypto_interval = 'day'
+price_interval = '1h'
+coinglass_interval = '1h'
+crypto_interval = 'hour'
 exchange = 'binance'
 under_asset = 'btc'
 
-# ------------------------------------------------------------- Exchange -------------------------------------------------------------
-# TOPIC = 'binance-linear|candle?symbol=BTCUSDT&interval=1h'
-# TOPIC = 'bybit-linear|candle?symbol=BTCUSDT&interval=1d'
-# TOPIC = 'bitget-linear|candle?symbol=BTCUSDT&interval=1d'
-# TOPIC = 'okx-linear|candle?symbol=BTCUSDT&interval=1d'
+# ---------------------- change exchange ----------------------
+exchange = 'binance'
+# exchange = 'bybit'
+# exchange = 'bitget'
+# exchange = 'okx'
+price_topic = exchange+'-linear|candle?symbol=BTCUSDT&interval='+price_interval
+# ---------------------- change exchange ----------------------
+
 # ------------------------------------------------------------- Coinglass -------------------------------------------------------------
 # TOPIC = 'coinglass|coinbase-premium-index?interval=1h'
 # TOPIC = 'coinglass|futures/top-long-short-account-ratio/history?exchange=Binance&symbol=BTCUSDT&interval=15m'
@@ -215,6 +219,20 @@ TOPIC = 'cryptoquant|'+under_asset+'/market-data/coinbase-premium-index?window='
 
 
 # ------------------------------------------------------------- Glassnode -------------------------------------------------------------
+async def fetch_cryptoquant_data():
+    data = await cybotrade_datasource.query_paginated(
+        api_key=API_KEY, 
+        topic=TOPIC, 
+        start_time=datetime(year=2021, month=1, day=1, tzinfo=timezone.utc),
+        end_time=datetime(year=2024, month=12, day=30, tzinfo=timezone.utc)
+    )
+    df = pd.DataFrame(data)
+    df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
+    print(df)
+    logging.info("datasource test set done!")
+    path = f"src/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
+    df.to_csv(path,index=False)
+
 async def fetch_validation_set():
     validation_start = datetime(year=2024, month=12, day=30, tzinfo=timezone.utc)
     validation_end = datetime.now(timezone.utc)
@@ -227,25 +245,47 @@ async def fetch_validation_set():
     df = pd.DataFrame(data)
     df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
     print(df)
+    logging.info("datasource validation set done!")
     path = f"validation_sets/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val.csv"
     df.to_csv(path, index=False)
 
-async def main():
-    # 测试集
+async def fetch_price_data():
     data = await cybotrade_datasource.query_paginated(
-        api_key=API_KEY, 
-        topic=TOPIC, 
+        api_key=API_KEY,
+        topic=price_topic,
         start_time=datetime(year=2021, month=1, day=1, tzinfo=timezone.utc),
         end_time=datetime(year=2024, month=12, day=30, tzinfo=timezone.utc)
     )
     df = pd.DataFrame(data)
     df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
     print(df)
-    path = f"src/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
+    logging.info("price test set done!")
+    path = f"src/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
     df.to_csv(path,index=False)
 
+async def fetch_price_data_validation():
+    data = await cybotrade_datasource.query_paginated(
+        api_key=API_KEY,
+        topic=price_topic,
+        start_time=datetime(year=2024, month=12, day=30, tzinfo=timezone.utc),
+        end_time=datetime.now(timezone.utc)
+    )
+    df = pd.DataFrame(data)
+    df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
+    print(df)
+    logging.info("price validation set done!")
+    path = f"validation_sets/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val.csv"
+    df.to_csv(path,index=False)
+
+
+
+async def main():
+    # 测试集
+    await fetch_cryptoquant_data()
+    await fetch_price_data()
     # 验证集
     await fetch_validation_set()
+    await fetch_price_data_validation()
     
 
 asyncio.run(main())
