@@ -15,7 +15,7 @@ exchange = 'binance'
 under_asset = 'btc'
 
 # ------------------------------------------------------------- Exchange -------------------------------------------------------------
-# OPIC = 'binance-linear|candle?symbol=BTCUSDT&interval=1d'
+TOPIC = 'binance-linear|candle?symbol=BTCUSDT&interval=1h'
 # TOPIC = 'bybit-linear|candle?symbol=BTCUSDT&interval=1d'
 # TOPIC = 'bitget-linear|candle?symbol=BTCUSDT&interval=1d'
 # TOPIC = 'okx-linear|candle?symbol=BTCUSDT&interval=1d'
@@ -197,7 +197,7 @@ under_asset = 'btc'
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/funding-rates?exchange='+exchange+'&window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/taker-buy-sell-stats?exchange='+exchange+'&window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/liquidations?exchange='+exchange+'&window='+crypto_interval
-TOPIC = 'cryptoquant|'+under_asset+'/market-data/coinbase-premium-index?window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/market-data/coinbase-premium-index?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/ohlcv?exchange='+exchange+'&window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/price?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/volatility?window='+crypto_interval
