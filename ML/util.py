@@ -1688,3 +1688,6 @@ def send_telegram_msg(
         token=telegram_token,
     )
 
+def dropColumn(df) -> pd.DataFrame:
+    df_cleaned = df.drop(columns=[col for col in df.columns if 'high' in col or 'low' in col or 'open' in col or 'volume' in col])
+    return df_cleaned

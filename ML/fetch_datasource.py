@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import numpy as np
 import asyncio
+import util
 import cybotrade_datasource
 from datetime import datetime, timezone
 from dotenv import load_dotenv
@@ -228,6 +229,7 @@ async def fetch_cryptoquant_data():
     )
     df = pd.DataFrame(data)
     df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
+    df = df.drop(columns='datetime')
     print(df)
     logging.info("datasource test set done!")
     path = f"src/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
@@ -259,6 +261,8 @@ async def fetch_price_data():
     )
     df = pd.DataFrame(data)
     df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
+    if 'close' in df.columns:
+        df['change'] = df['close'].pct_change()
     print(df)
     logging.info("price test set done!")
     path = f"src/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
@@ -280,30 +284,6 @@ async def fetch_price_data_validation():
     path = f"validation_sets/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val.csv"
     df.to_csv(path,index=False)
 
-
-def merge_and_save(cryptoquant_path, price_path, output_path):
-    # 读取数据
-    df_cryptoquant = pd.read_csv(cryptoquant_path)
-    df_price = pd.read_csv(price_path)
-    # 只保留价格数据的 start_time 和 close
-    close_col = None
-    for col in ['close', 'close_price', 'price', 'c']:
-        if col in df_price.columns:
-            close_col = col
-            break
-    if close_col is None:
-        raise ValueError(f"{price_path} 未找到收盘价列")
-    df_price = df_price[['start_time', close_col]].rename(columns={close_col: 'close'})
-    # 确保 start_time 为 datetime
-    df_cryptoquant['start_time'] = pd.to_datetime(df_cryptoquant['start_time'])
-    df_price['start_time'] = pd.to_datetime(df_price['start_time'])
-    # 合并
-    df_merged = pd.merge(df_cryptoquant, df_price, on='start_time', how='left')
-    # 保存
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    df_merged.to_csv(output_path, index=False)
-    print(f"✅ 测试集合并完成: {output_path}")
-
 async def main():
     # 测试集
     await fetch_cryptoquant_data()
@@ -311,7 +291,14 @@ async def main():
     cryptoquant_test_path = f"src/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
     price_test_path = f"src/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
     output_test_path = f"output/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_merged.csv"
-    merge_and_save(cryptoquant_test_path, price_test_path, output_test_path)
+    df_cryptoquant = pd.read_csv(cryptoquant_test_path)
+    df_price_test = pd.read_csv(price_test_path)
+    df_merged_test = pd.merge(df_cryptoquant, df_price_test, on='start_time', how='left')
+    # Drop Open High Low Volume
+    df_merged_test = util.dropColumn(df_merged_test)
+    df_merged_test.to_csv(output_test_path, index=False)
+    print(f"✅ 验证集合并完成: {output_test_path}")
+
 
     # 验证集
     await fetch_validation_set()
@@ -322,6 +309,8 @@ async def main():
     df_cryptoquant_val = pd.read_csv(cryptoquant_val_path)
     df_price_val = pd.read_csv(price_val_path)
     df_merged_val = pd.merge(df_cryptoquant_val, df_price_val, on='start_time', how='left')
+    # Drop Open High Low Volume
+    df_merged_val = util.dropColumn(df_merged_val)
     df_merged_val.to_csv(output_val_path, index=False)
     print(f"✅ 验证集合并完成: {output_val_path}")
 
