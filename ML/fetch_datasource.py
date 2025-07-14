@@ -300,7 +300,7 @@ def merge_and_save(cryptoquant_path, price_path, output_path):
     # 保存
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     df_merged.to_csv(output_path, index=False)
-    print(f"✅ 合并完成: {output_path}")
+    print(f"✅ 测试集合并完成: {output_path}")
 
 async def main():
     # 测试集
@@ -314,10 +314,14 @@ async def main():
     # 验证集
     await fetch_validation_set()
     await fetch_price_data_validation()
-    cryptoquant_val_path = f"src/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val.csv"
+    cryptoquant_val_path = f"validation_sets/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val.csv"
     price_val_path = f"validation_sets/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val.csv"
     output_val_path = f"output/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val_merged.csv"
-    merge_and_save(cryptoquant_val_path, price_val_path, output_val_path)
+    df_cryptoquant_val = pd.read_csv(cryptoquant_val_path)
+    df_price_val = pd.read_csv(price_val_path)
+    df_merged_val = pd.merge(df_cryptoquant_val, df_price_val, on='start_time', how='left')
+    df_merged_val.to_csv(output_val_path, index=False)
+    print(f"✅ 验证集合并完成: {output_val_path}")
 
 asyncio.run(main())
 
