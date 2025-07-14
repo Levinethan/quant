@@ -244,6 +244,7 @@ async def fetch_validation_set():
     )
     df = pd.DataFrame(data)
     df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
+    df = df.drop(columns='datetime')
     print(df)
     logging.info("datasource validation set done!")
     path = f"validation_sets/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val.csv"
@@ -272,6 +273,8 @@ async def fetch_price_data_validation():
     )
     df = pd.DataFrame(data)
     df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
+    if 'close' in df.columns:
+        df['change'] = df['close'].pct_change()
     print(df)
     logging.info("price validation set done!")
     path = f"validation_sets/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val.csv"
@@ -279,7 +282,6 @@ async def fetch_price_data_validation():
 
 
 def merge_and_save(cryptoquant_path, price_path, output_path):
-    import pandas as pd
     # 读取数据
     df_cryptoquant = pd.read_csv(cryptoquant_path)
     df_price = pd.read_csv(price_path)
@@ -304,12 +306,12 @@ def merge_and_save(cryptoquant_path, price_path, output_path):
 
 async def main():
     # 测试集
-    await fetch_cryptoquant_data()
-    await fetch_price_data()
-    cryptoquant_test_path = f"src/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
-    price_test_path = f"src/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
-    output_test_path = f"output/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_merged.csv"
-    merge_and_save(cryptoquant_test_path, price_test_path, output_test_path)
+    #await fetch_cryptoquant_data()
+    #await fetch_price_data()
+    #cryptoquant_test_path = f"src/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
+    #price_test_path = f"src/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
+    #output_test_path = f"output/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_merged.csv"
+    #merge_and_save(cryptoquant_test_path, price_test_path, output_test_path)
 
     # 验证集
     await fetch_validation_set()
