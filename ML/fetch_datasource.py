@@ -306,12 +306,12 @@ def merge_and_save(cryptoquant_path, price_path, output_path):
 
 async def main():
     # 测试集
-    #await fetch_cryptoquant_data()
-    #await fetch_price_data()
-    #cryptoquant_test_path = f"src/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
-    #price_test_path = f"src/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
-    #output_test_path = f"output/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_merged.csv"
-    #merge_and_save(cryptoquant_test_path, price_test_path, output_test_path)
+    await fetch_cryptoquant_data()
+    await fetch_price_data()
+    cryptoquant_test_path = f"src/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
+    price_test_path = f"src/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
+    output_test_path = f"output/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_merged.csv"
+    merge_and_save(cryptoquant_test_path, price_test_path, output_test_path)
 
     # 验证集
     await fetch_validation_set()
