@@ -15,13 +15,13 @@ exchange = 'binance'
 under_asset = 'btc'
 
 # ------------------------------------------------------------- Exchange -------------------------------------------------------------
-TOPIC = 'binance-linear|candle?symbol=BTCUSDT&interval=1h'
+# TOPIC = 'binance-linear|candle?symbol=BTCUSDT&interval=1h'
 # TOPIC = 'bybit-linear|candle?symbol=BTCUSDT&interval=1d'
 # TOPIC = 'bitget-linear|candle?symbol=BTCUSDT&interval=1d'
 # TOPIC = 'okx-linear|candle?symbol=BTCUSDT&interval=1d'
 # ------------------------------------------------------------- Coinglass -------------------------------------------------------------
 # TOPIC = 'coinglass|coinbase-premium-index?interval=1h'
-# TOPIC = 'coinglass|futures/top-long-short-account-ratio/history?exchange=Binance&symbol=BTCUSDT&interval=1d'
+TOPIC = 'coinglass|futures/top-long-short-account-ratio/history?exchange=Binance&symbol=BTCUSDT&interval=1h'
 # TOPIC = 'coinglass|futures/hyperliquid/whale-alert' failed
 # TOPIC = 'coinglass|futures/taker-buy-sell-volume/history?exchange=Binance&symbol=BTC&range=h1&interval=1d'
 # TOPIC = 'coinglass|futures/liquidation/history?exchange=Binance&symbol=BTCUSDT&interval=1d'
@@ -221,8 +221,8 @@ async def main():
     data = await cybotrade_datasource.query_paginated(
         api_key=API_KEY, 
         topic=TOPIC, 
-        start_time=datetime(year=2021, month=1, day=1, tzinfo=timezone.utc),
-        end_time=datetime(year=2024, month=11, day=30, tzinfo=timezone.utc)
+        start_time=datetime(year=2024, month=1, day=1, tzinfo=timezone.utc),
+        end_time=datetime(year=2024, month=12, day=30, tzinfo=timezone.utc)
     )
     df = pd.DataFrame(data)
     df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
