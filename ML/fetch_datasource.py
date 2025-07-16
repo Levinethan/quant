@@ -13,8 +13,8 @@ API_KEY = "3FOSdsLW7nQmT8X7a2nRFkBEIwnsQnkjauet8IdBzKB2QDN0"
 price_interval = '1h'
 coinglass_interval = '1h'
 crypto_interval = 'hour'
-exchange = 'binance'
-under_asset = 'btc'
+under_asset = 'eth'
+rolling_window = 300
 
 # ---------------------- change exchange ----------------------
 exchange = 'binance'
@@ -220,7 +220,7 @@ TOPIC = 'cryptoquant|'+under_asset+'/market-data/coinbase-premium-index?window='
 
 
 # ------------------------------------------------------------- Glassnode -------------------------------------------------------------
-async def fetch_cryptoquant_data():
+async def fetch_datasource_data():
     data = await cybotrade_datasource.query_paginated(
         api_key=API_KEY, 
         topic=TOPIC, 
@@ -230,6 +230,10 @@ async def fetch_cryptoquant_data():
     df = pd.DataFrame(data)
     df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
     df = df.drop(columns='datetime')
+    # Datasource topic uniq colume coinbase_premium_gap
+    df['mean'] = util.get_rolling_mean(df['coinbase_premium_gap'],rolling_window)
+    df['std'] = util.get_rolling_std(df['coinbase_premium_gap'],rolling_window)
+    df['z-score'] = util.get_rolling_zscore(df['coinbase_premium_gap'],df['mean'],df['std'])
     print(df)
     logging.info("datasource test set done!")
     path = f"src/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
@@ -247,6 +251,10 @@ async def fetch_validation_set():
     df = pd.DataFrame(data)
     df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
     df = df.drop(columns='datetime')
+    df['mean'] = util.get_rolling_mean(df['coinbase_premium_gap'],rolling_window)
+    df['std'] = util.get_rolling_std(df['coinbase_premium_gap'],rolling_window)
+    df['z-score'] = util.get_rolling_zscore(df['coinbase_premium_gap'],df['mean'],df['std'])
+
     print(df)
     logging.info("datasource validation set done!")
     path = f"validation_sets/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val.csv"
@@ -286,7 +294,7 @@ async def fetch_price_data_validation():
 
 async def main():
     # 测试集
-    await fetch_cryptoquant_data()
+    await fetch_datasource_data()
     await fetch_price_data()
     cryptoquant_test_path = f"src/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
     price_test_path = f"src/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
