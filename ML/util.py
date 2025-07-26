@@ -21,7 +21,8 @@ import psycopg2
 from functools import reduce
 from dataclasses import dataclass
 from pybit.unified_trading import HTTP
-
+import numpy as np
+from statsmodels.tsa.stattools import adfuller
 import warnings
 
 # Suppress the specific FutureWarning
@@ -1691,3 +1692,64 @@ def send_telegram_msg(
 def dropColumn(df) -> pd.DataFrame:
     df_cleaned = df.drop(columns=[col for col in df.columns if 'high' in col or 'low' in col or 'open' in col or 'volume' in col])
     return df_cleaned
+
+def get_weights_ffd(d, size, thresh=1e-5):
+    w = [1.]
+    for k in range(1, size):
+        w_ = -w[-1] * (d - k + 1) / k
+        if abs(w_) < thresh:
+            break
+        w.append(w_)
+    return np.array(w[::-1])
+
+def frac_conv_kernel(series, d, thresh=1e-5):
+    w = get_weights_ffd(d, len(series), thresh)
+    width = len(w)
+    if len(series) < width:
+        return np.nan
+    return np.dot(w, series[-width:])
+
+def frac_diff_ffd(series, d, thresh=1e-5):
+    w = get_weights_ffd(d, series.shape[0], thresh)
+    width = len(w)
+    res = np.full(series.shape, np.nan)
+    for i in range(width-1, len(series)):
+        res[i] = np.dot(w, series.iloc[i-width+1:i+1])
+    return pd.Series(res, index=series.index)
+
+def find_min_fracdiff(series, d_range=np.arange(0, 1, 0.01), p_thresh=0.05, min_len=30):
+    for d in d_range:
+        fd_series = frac_diff_ffd(series, d)
+        fd_series = fd_series.dropna()
+        if len(fd_series) < min_len:
+            continue
+        try:
+            pvalue = adfuller(fd_series)[1]
+        except Exception:
+            continue
+        if pvalue < p_thresh:
+            return d, pvalue
+    return None, None
+
+def batch_fracdiff_features(df, columns, d_range=np.arange(0, 1, 0.01), p_thresh=0.05, suffix_fmt='fracdiff_{:.2f}'):
+    """
+    对df的多个列批量做分数阶微分，自动寻找最优d，并生成新特征
+    返回: 新DataFrame（含原始和新特征），以及每个因子的最优d
+    """
+    d_dict = {}
+    df_new = df.copy()
+    for col in columns:
+        if col not in df.columns:
+            print(f"⚠️ {col} 不在DataFrame中，跳过")
+            continue
+        print(f"正在处理: {col}")
+        d_opt, pval = find_min_fracdiff(df[col].dropna(), d_range, p_thresh)
+        if d_opt is None:
+            print(f"  未找到合适的分数阶d，跳过")
+            continue
+        print(f"  最优分数阶: {d_opt:.2f} (ADF p={pval:.4f})")
+        fd_series = frac_diff_ffd(df[col], d_opt)
+        new_col = suffix_fmt.format(d_opt).replace('.', '_')
+        df_new[f'{col}_{new_col}'] = fd_series
+        d_dict[col] = d_opt
+    return df_new, d_dict
