@@ -13,7 +13,7 @@ API_KEY = "3FOSdsLW7nQmT8X7a2nRFkBEIwnsQnkjauet8IdBzKB2QDN0"
 price_interval = '1h'
 coinglass_interval = '1h'
 crypto_interval = 'hour'
-under_asset = 'btc'
+under_asset = 'eth'
 rolling_window = 300
 
 # ---------------------- change exchange ----------------------
@@ -21,7 +21,7 @@ exchange = 'binance'
 # exchange = 'bybit'
 # exchange = 'bitget'
 # exchange = 'okx'
-price_topic = exchange+'-linear|candle?symbol=BTCUSDT&interval='+price_interval
+price_topic = exchange+'-linear|candle?symbol=ETHUSDT&interval='+price_interval
 # ---------------------- change exchange ----------------------
 
 # ------------------------------------------------------------- Coinglass -------------------------------------------------------------
@@ -60,17 +60,16 @@ price_topic = exchange+'-linear|candle?symbol=BTCUSDT&interval='+price_interval
 
 
 # --------------------------- Exchange Flows 交易所流量 ---------------------------
-# TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/reserve?exchange='+exchange+'&window='+crypto_interval
-# TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/netflow?exchange='+exchange+'&window='+crypto_interval
-# TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/inflow?exchange='+exchange+'&window='+crypto_interval
-# TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/outflow?exchange='+exchange+'&window='+crypto_interval
-# TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/transactions-count?exchange='+exchange+'&window='+crypto_interval
-# TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/addresses-count?exchange='+exchange+'&window='+crypto_interval
-# TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/in-house-flow?exchange='+exchange+'&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/reserve?exchange='+exchange+'&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/netflow?exchange='+exchange+'&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/inflow?exchange='+exchange+'&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/outflow?exchange='+exchange+'&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/transactions-count?exchange='+exchange+'&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/addresses-count?exchange='+exchange+'&window='+crypto_interval
 # --------------------------- Exchange Flows 交易所流量 ---------------------------
 
 # --------------------------- Flow Indicator 流量指标 ---------------------------
-#TOPIC = 'cryptoquant|'+under_asset+'/flow-indicator/mpi?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/flow-indicator/exchange-supply-ratio?exchange=binance&window='+crypto_interval
 #TOPIC = 'cryptoquant|'+under_asset+'/flow-indicator/exchange-shutdown-index?exchange='+exchange+'&window='+crypto_interval
 #TOPIC = 'cryptoquant|'+under_asset+'/flow-indicator/exchange-whale-ratio?exchange='+exchange+'&window='+crypto_interval
 #TOPIC = 'cryptoquant|'+under_asset+'/flow-indicator/fund-flow-ratio?exchange='+exchange+'&window='+crypto_interval
@@ -91,6 +90,7 @@ price_topic = exchange+'-linear|candle?symbol=BTCUSDT&interval='+price_interval
 #TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/sopr-ratio?'+'&window='+crypto_interval
 #TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/realized-price?'+'&window='+crypto_interval
 #TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/utxo-realized-price-age-distribution?'+'&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/estimated-leverage-ratio?exchange=binance&window=hour'
 # --------------------------- Market Indicator 市场指标 ---------------------------
 
 
@@ -152,7 +152,7 @@ price_topic = exchange+'-linear|candle?symbol=BTCUSDT&interval='+price_interval
 # --------------------------- Bank Flows 银行流动 ---------------------------
 
 # --------------------------- Fund Data 基金数据 ---------------------------
-#TOPIC = 'cryptoquant|'+under_asset+'/fund-data/market-premium?symbol=gbtc&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/fund-data/market-price-usd?symbol=eth&window=day'
 # TOPIC = 'cryptoquant|'+under_asset+'/fund-data/etf-outflow?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/fund-data/etf-netflow?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/fund-data/etf-reserve?window='+crypto_interval
@@ -161,11 +161,11 @@ price_topic = exchange+'-linear|candle?symbol=BTCUSDT&interval='+price_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/fund-data/etf-revenue?window='+crypto_interval
 # --------------------------- Fund Data 基金数据 ---------------------------
 
-
+TOPIC = 'cryptoquant|'+under_asset+'/eth2/phase0-success-rate?window=hour'
 # --------------------------- Network Data 链上数据 ---------------------------
 # TOPIC = 'cryptoquant|'+under_asset+'/network-data/utxo-count?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/network-data/fees?window='+crypto_interval
-#TOPIC = 'cryptoquant|'+under_asset+'/network-data/hashrate?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/network-data/uncle-blockreward?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/network-data/transactions-count?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/network-data/addresses-count?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/network-data/tokens-transferred?window='+crypto_interval
@@ -188,7 +188,7 @@ price_topic = exchange+'-linear|candle?symbol=BTCUSDT&interval='+price_interval
 # --------------------------- Mempool Statistics 内存池统计 ---------------------------
 
 # --------------------------- Lightning Network Statistics 闪电网络统计 ---------------------------
-TOPIC = 'cryptoquant|'+under_asset+'/lightning/stats-in-total?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/lightning/stats-in-total?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/lightning-network-statistics/channel-count?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/lightning-network-statistics/capacity?window='+crypto_interval
 # --------------------------- Lightning Network Statistics 闪电网络统计 ---------------------------
@@ -205,7 +205,7 @@ TOPIC = 'cryptoquant|'+under_asset+'/lightning/stats-in-total?window='+crypto_in
 #TOPIC = 'cryptoquant|'+under_asset+'/market-data/funding-rates?exchange='+exchange+'&window='+crypto_interval
 #TOPIC = 'cryptoquant|'+under_asset+'/market-data/taker-buy-sell-stats?exchange='+exchange+'&window='+crypto_interval
 #TOPIC = 'cryptoquant|'+under_asset+'/market-data/liquidations?exchange='+exchange+'&window='+crypto_interval
-# TOPIC = 'cryptoquant|'+under_asset+'/market-data/coinbase-premium-index?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/market-data/coinbase-premium-index?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/ohlcv?exchange='+exchange+'&window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/price?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/volume?window='+crypto_interval
