@@ -12,7 +12,7 @@ API_KEY = "3FOSdsLW7nQmT8X7a2nRFkBEIwnsQnkjauet8IdBzKB2QDN0"
 
 price_interval = '1h'
 coinglass_interval = '1h'
-crypto_interval = 'min'
+crypto_interval = 'hour'
 under_asset = 'btc'
 rolling_window = 300
 
@@ -84,22 +84,25 @@ price_topic = exchange+'-linear|candle?symbol=BTCUSDT&interval='+price_interval
 # --------------------------- Flow Indicator 流量指标 ---------------------------
 
 # --------------------------- Market Indicator 市场指标 ---------------------------
-# TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/estimated-leverage-ratio?exchange='+exchange+'&window='+crypto_interval'
-# TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/funding-rates?exchange='+exchange+'&window='+crypto_interval'
-# TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/open-interest?exchange='+exchange+'&window='+crypto_interval'
-# TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/long-short-ratio?exchange='+exchange+'&window='+crypto_interval'
-# TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/taker-buy-sell-volume?exchange='+exchange+'&window='+crypto_interval'
-# TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/taker-buy-sell-ratio?exchange='+exchange+'&window='+crypto_interval'
-# TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/basis?exchange='+exchange+'&window='+crypto_interval'
-# TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/funding-rate-prediction?exchange='+exchange+'&window='+crypto_interval'
-# TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/average-funding-rate?exchange='+exchange+'&window='+crypto_interval'
-# TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/average-open-interest?exchange='+exchange+'&window='+crypto_interval'
-# TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/average-estimated-leverage-ratio?exchange='+exchange+'&window='+crypto_interval'
+#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/estimated-leverage-ratio?exchange='+exchange+'&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/stablecoin-supply-ratio?'+'&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/mvrv?'+'&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/sopr?'+'&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/sopr-ratio?'+'&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/realized-price?'+'&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/utxo-realized-price-age-distribution?'+'&window='+crypto_interval
 # --------------------------- Market Indicator 市场指标 ---------------------------
 
 
 # --------------------------- Network Indicator 链上指标 ---------------------------
-# TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/active-addresses?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/stock-to-flow?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/nvt?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/nvt-golden-cross?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/nvm?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/puell-multiple?window='+crypto_interval
+
+#TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/spent-output-supply-distribution?window='+crypto_interval
+
 # TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/new-addresses?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/large-transactions?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/mean-transaction-value?window='+crypto_interval
@@ -120,7 +123,7 @@ price_topic = exchange+'-linear|candle?symbol=BTCUSDT&interval='+price_interval
 # --------------------------- Network Indicator 链上指标 ---------------------------
 
 # --------------------------- Miner Flows 矿工流动 ---------------------------
-# TOPIC = 'cryptoquant|'+under_asset+'/miner-flows/miner-outflow?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/miner-flows/in-house-flow?miner=f2pool&window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/miner-flows/miner-inflow?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/miner-flows/miner-netflow?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/miner-flows/miner-reserve?window='+crypto_interval
@@ -139,7 +142,7 @@ price_topic = exchange+'-linear|candle?symbol=BTCUSDT&interval='+price_interval
 # --------------------------- Inter-Entity Flows 实体间流动 ---------------------------
 
 # --------------------------- Bank Flows 银行流动 ---------------------------
-# TOPIC = 'cryptoquant|'+under_asset+'/bank-flows/bank-inflow?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/bank-flows/addresses-count?bank=blockfi&window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/bank-flows/bank-outflow?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/bank-flows/bank-netflow?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/bank-flows/bank-reserve?window='+crypto_interval
@@ -149,7 +152,7 @@ price_topic = exchange+'-linear|candle?symbol=BTCUSDT&interval='+price_interval
 # --------------------------- Bank Flows 银行流动 ---------------------------
 
 # --------------------------- Fund Data 基金数据 ---------------------------
-# TOPIC = 'cryptoquant|'+under_asset+'/fund-data/etf-inflow?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/fund-data/market-premium?symbol=gbtc&window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/fund-data/etf-outflow?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/fund-data/etf-netflow?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/fund-data/etf-reserve?window='+crypto_interval
@@ -162,7 +165,7 @@ price_topic = exchange+'-linear|candle?symbol=BTCUSDT&interval='+price_interval
 # --------------------------- Network Data 链上数据 ---------------------------
 # TOPIC = 'cryptoquant|'+under_asset+'/network-data/utxo-count?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/network-data/fees?window='+crypto_interval
-# TOPIC = 'cryptoquant|'+under_asset+'/network-data/supply?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/network-data/hashrate?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/network-data/transactions-count?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/network-data/addresses-count?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/network-data/tokens-transferred?window='+crypto_interval
@@ -185,7 +188,7 @@ price_topic = exchange+'-linear|candle?symbol=BTCUSDT&interval='+price_interval
 # --------------------------- Mempool Statistics 内存池统计 ---------------------------
 
 # --------------------------- Lightning Network Statistics 闪电网络统计 ---------------------------
-# TOPIC = 'cryptoquant|'+under_asset+'/lightning-network-statistics/node-count?window='+crypto_interval
+TOPIC = 'cryptoquant|'+under_asset+'/lightning/stats-in-total?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/lightning-network-statistics/channel-count?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/lightning-network-statistics/capacity?window='+crypto_interval
 # --------------------------- Lightning Network Statistics 闪电网络统计 ---------------------------
@@ -197,15 +200,14 @@ price_topic = exchange+'-linear|candle?symbol=BTCUSDT&interval='+price_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/volatility?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/price-drawdown?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/price-drawup?window='+crypto_interval
-# TOPIC = 'cryptoquant|'+under_asset+'/market-data/capitalization?window='+crypto_interval
-# TOPIC = 'cryptoquant|'+under_asset+'/market-data/open-interest?exchange='+exchange+'&window='+crypto_interval
-# TOPIC = 'cryptoquant|'+under_asset+'/market-data/funding-rates?exchange='+exchange+'&window='+crypto_interval
-# TOPIC = 'cryptoquant|'+under_asset+'/market-data/taker-buy-sell-stats?exchange='+exchange+'&window='+crypto_interval
-# TOPIC = 'cryptoquant|'+under_asset+'/market-data/liquidations?exchange='+exchange+'&window='+crypto_interval
-TOPIC = 'cryptoquant|'+under_asset+'/market-data/coinbase-premium-index?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/market-data/capitalization?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/market-data/open-interest?exchange='+exchange+'&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/market-data/funding-rates?exchange='+exchange+'&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/market-data/taker-buy-sell-stats?exchange='+exchange+'&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/market-data/liquidations?exchange='+exchange+'&window='+crypto_interval
+# TOPIC = 'cryptoquant|'+under_asset+'/market-data/coinbase-premium-index?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/ohlcv?exchange='+exchange+'&window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/price?window='+crypto_interval
-# TOPIC = 'cryptoquant|'+under_asset+'/market-data/volatility?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/volume?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/price-drawdown?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/price-drawup?window='+crypto_interval
@@ -229,11 +231,6 @@ async def fetch_datasource_data():
     )
     df = pd.DataFrame(data)
     df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
-    df = df.drop(columns='datetime')
-    # Datasource topic uniq colume coinbase_premium_gap
-    df['mean'] = util.get_rolling_mean(df['coinbase_premium_gap'],rolling_window)
-    df['std'] = util.get_rolling_std(df['coinbase_premium_gap'],rolling_window)
-    df['z-score'] = util.get_rolling_zscore(df['coinbase_premium_gap'],df['mean'],df['std'])
     print(df)
     logging.info("datasource test set done!")
     path = f"src/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
@@ -250,11 +247,7 @@ async def fetch_validation_set():
     )
     df = pd.DataFrame(data)
     df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
-    df = df.drop(columns='datetime')
-    df['mean'] = util.get_rolling_mean(df['coinbase_premium_gap'],rolling_window)
-    df['std'] = util.get_rolling_std(df['coinbase_premium_gap'],rolling_window)
-    df['z-score'] = util.get_rolling_zscore(df['coinbase_premium_gap'],df['mean'],df['std'])
-
+    
     print(df)
     logging.info("datasource validation set done!")
     path = f"validation_sets/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val.csv"
