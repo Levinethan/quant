@@ -13,15 +13,15 @@ API_KEY = "3FOSdsLW7nQmT8X7a2nRFkBEIwnsQnkjauet8IdBzKB2QDN0"
 price_interval = '1h'
 coinglass_interval = '1h'
 crypto_interval = 'hour'
-under_asset = 'eth'
+under_asset = 'btc'
 rolling_window = 300
 
 # ---------------------- change exchange ----------------------
-exchange = 'binance'
-# exchange = 'bybit'
+#exchange = 'binance'
+exchange = 'bybit'
 # exchange = 'bitget'
 # exchange = 'okx'
-price_topic = exchange+'-linear|candle?symbol=ETHUSDT&interval='+price_interval
+price_topic = exchange+'-linear|candle?symbol=BTCUSDT&interval='+price_interval
 # ---------------------- change exchange ----------------------
 
 # ------------------------------------------------------------- Coinglass -------------------------------------------------------------
@@ -84,11 +84,11 @@ price_topic = exchange+'-linear|candle?symbol=ETHUSDT&interval='+price_interval
 
 # --------------------------- Market Indicator 市场指标 ---------------------------
 #TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/estimated-leverage-ratio?exchange='+exchange+'&window='+crypto_interval
-#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/stablecoin-supply-ratio?'+'&window='+crypto_interval
-#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/mvrv?'+'&window='+crypto_interval
-#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/sopr?'+'&window='+crypto_interval
-#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/sopr-ratio?'+'&window='+crypto_interval
-#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/realized-price?'+'&window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/stablecoin-supply-ratio?'+'&window=day'
+#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/mvrv?'+'&window=day'
+#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/sopr?'+'&window=day'
+#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/sopr-ratio?'+'&window=day'
+#TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/realized-price?'+'&window=day'
 #TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/utxo-realized-price-age-distribution?'+'&window='+crypto_interval
 #TOPIC = 'cryptoquant|'+under_asset+'/market-indicator/estimated-leverage-ratio?exchange=binance&window=hour'
 # --------------------------- Market Indicator 市场指标 ---------------------------
@@ -96,7 +96,7 @@ price_topic = exchange+'-linear|candle?symbol=ETHUSDT&interval='+price_interval
 
 # --------------------------- Network Indicator 链上指标 ---------------------------
 #TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/stock-to-flow?window='+crypto_interval
-#TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/nvt?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/nvt?window=day'
 #TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/nvt-golden-cross?window='+crypto_interval
 #TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/nvm?window='+crypto_interval
 #TOPIC = 'cryptoquant|'+under_asset+'/network-indicator/puell-multiple?window='+crypto_interval
@@ -161,7 +161,7 @@ price_topic = exchange+'-linear|candle?symbol=ETHUSDT&interval='+price_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/fund-data/etf-revenue?window='+crypto_interval
 # --------------------------- Fund Data 基金数据 ---------------------------
 
-TOPIC = 'cryptoquant|'+under_asset+'/eth2/phase0-success-rate?window=hour'
+#TOPIC = 'cryptoquant|'+under_asset+'/eth2/phase0-success-rate?window=hour'
 # --------------------------- Network Data 链上数据 ---------------------------
 # TOPIC = 'cryptoquant|'+under_asset+'/network-data/utxo-count?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/network-data/fees?window='+crypto_interval
@@ -200,7 +200,7 @@ TOPIC = 'cryptoquant|'+under_asset+'/eth2/phase0-success-rate?window=hour'
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/volatility?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/price-drawdown?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/price-drawup?window='+crypto_interval
-#TOPIC = 'cryptoquant|'+under_asset+'/market-data/capitalization?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/market-data/capitalization?window=day'
 #TOPIC = 'cryptoquant|'+under_asset+'/market-data/open-interest?exchange='+exchange+'&window='+crypto_interval
 #TOPIC = 'cryptoquant|'+under_asset+'/market-data/funding-rates?exchange='+exchange+'&window='+crypto_interval
 #TOPIC = 'cryptoquant|'+under_asset+'/market-data/taker-buy-sell-stats?exchange='+exchange+'&window='+crypto_interval
@@ -208,7 +208,7 @@ TOPIC = 'cryptoquant|'+under_asset+'/eth2/phase0-success-rate?window=hour'
 #TOPIC = 'cryptoquant|'+under_asset+'/market-data/coinbase-premium-index?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/ohlcv?exchange='+exchange+'&window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/price?window='+crypto_interval
-# TOPIC = 'cryptoquant|'+under_asset+'/market-data/volume?window='+crypto_interval
+#TOPIC = 'cryptoquant|'+under_asset+'/market-data/volume?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/price-drawdown?window='+crypto_interval
 # TOPIC = 'cryptoquant|'+under_asset+'/market-data/price-drawup?window='+crypto_interval
 # --------------------------- Market Data 市场数据 ---------------------------
