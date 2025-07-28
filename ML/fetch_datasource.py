@@ -18,9 +18,9 @@ rolling_window = 300
 
 # ---------------------- change exchange ----------------------
 #exchange = 'binance'
-exchange = 'bybit'
-# exchange = 'bitget'
-# exchange = 'okx'
+#exchange = 'bybit'
+exchange = 'bitget'
+#exchange = 'okx'
 price_topic = exchange+'-linear|candle?symbol=BTCUSDT&interval='+price_interval
 # ---------------------- change exchange ----------------------
 
@@ -60,7 +60,7 @@ price_topic = exchange+'-linear|candle?symbol=BTCUSDT&interval='+price_interval
 
 
 # --------------------------- Exchange Flows 交易所流量 ---------------------------
-#TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/reserve?exchange='+exchange+'&window='+crypto_interval
+TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/reserve?exchange='+exchange+'&window='+crypto_interval
 #TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/netflow?exchange='+exchange+'&window='+crypto_interval
 #TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/inflow?exchange='+exchange+'&window='+crypto_interval
 #TOPIC = 'cryptoquant|'+under_asset+'/exchange-flows/outflow?exchange='+exchange+'&window='+crypto_interval
