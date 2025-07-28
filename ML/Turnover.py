@@ -15,8 +15,8 @@ add_size = 300000    ##############  每次累加的成交额变化量  ########
 
 baseline = csv_filename+'_'       ############### 保存文件的前缀 ##################
 
-for j in range(1):        ############# 循环次数 ############   
-    
+for j in range(1):        ############# 循环次数 ############
+
     file_name = file_name       ###############  原始数据文件 ############
     df = pd.read_csv(file_name)
 
@@ -34,7 +34,7 @@ for j in range(1):        ############# 循环次数 ############
     pos_sum = 0
 
     for i in range(0,len(df)):
-        
+
         # 数据读取
         p_t = df['time'].iloc[i]
         p_o = df['open'].iloc[i]
@@ -50,13 +50,13 @@ for j in range(1):        ############# 循环次数 ############
         di = df.index.values[i]
 
         # 数据缓存
-        buf_o.append(p_o)        
-        buf_h.append(p_h)       
-        buf_l.append(p_l)        
-        buf_c.append(p_c)        
+        buf_o.append(p_o)
+        buf_h.append(p_h)
+        buf_l.append(p_l)
+        buf_c.append(p_c)
         buf_v.append(p_v)
         buf_b.append(p_b)
-        buf_s.append(p_s)        
+        buf_s.append(p_s)
         # 累计成交额
         pos_sum = pos_sum + (p_h / p_l) * 1000
         #print("pos_sum : ",pos_sum)
@@ -79,7 +79,7 @@ for j in range(1):        ############# 循环次数 ############
                 'low': l,
                 'close': c,
                 'buy':b,
-                'sell':s,  
+                'sell':s,
                 'volume': v,
                 'pos': p,
                 'hang':di
@@ -95,7 +95,7 @@ for j in range(1):        ############# 循环次数 ############
     aaa = pd.DataFrame(res)
     aaa['eob'] = pd.to_datetime(aaa['eob'])
     date = aaa['eob'] > '2024-01-01'   #### 测试集数量
-    
+
     aaa.to_csv('./temp/' + baseline + str(size) + "_" + str(len(aaa)) + "_" +  str(len(aaa[date])) + ".csv",index = False)
 
 
@@ -113,14 +113,14 @@ for j in range(1):        ############# 循环次数 ############
     returns_3 = np.log(bars['close']).diff(periods=3).dropna()
     returns_4 = np.log(bars['close']).diff(periods=4).dropna()
     returns_5 = np.log(bars['close']).diff(periods=5).dropna()
-    
+
 
     standard_1 = (returns_1 - returns_1.mean()) / returns_1.std()
     standard_2 = (returns_2 - returns_2.mean()) / returns_2.std()
     standard_3 = (returns_3 - returns_3.mean()) / returns_3.std()
     standard_4 = (returns_4 - returns_4.mean()) / returns_4.std()
     standard_5 = (returns_5 - returns_5.mean()) / returns_5.std()
-   
+
 
     plt.figure(figsize=(16,12))
 
