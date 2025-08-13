@@ -1,4 +1,0 @@
-INFO cybotrade.trader.exchange_trader 2025-07-27 22:34:07,777 exchange_trader.rs:934 Successfully reconciled active orders.
-INFO cybotrade.runtime 2025-07-27 22:34:07,779 runtime.rs:679 [HEARTBEAT] Runtime is alive
-INFO cybotrade.trader.exchange_trader 2025-07-27 22:44:07,784 exchange_trader.rs:934 Successfully reconciled active orders.
-INFO cybotrade.trader.exchange_trader 2025-07-27 22:54:07,777 exchange_trader.rs:934 Successfully reconciled active orders.
