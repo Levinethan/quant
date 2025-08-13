@@ -258,7 +258,7 @@ async def fetch_price_data():
         api_key=API_KEY,
         topic=price_topic,
         start_time=datetime(year=2021, month=1, day=1, tzinfo=timezone.utc),
-        end_time=datetime(year=2024, month=12, day=30, tzinfo=timezone.utc)
+        end_time=datetime.now(timezone.utc)
     )
     df = pd.DataFrame(data)
     df['start_time'] = pd.to_datetime(df['start_time'], unit='ms')
@@ -266,7 +266,7 @@ async def fetch_price_data():
         df['change'] = df['close'].pct_change()
     print(df)
     logging.info("price test set done!")
-    path = f"src/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
+    path = f"price_data/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
     df.to_csv(path,index=False)
 
 async def fetch_price_data_validation():
@@ -290,33 +290,21 @@ async def main():
     #await fetch_datasource_data()
     await fetch_price_data()
     #cryptoquant_test_path = f"src/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
-    price_test_path = f"src/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
+    #price_test_path = f"src/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
     #output_test_path = f"output/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_merged.csv"
     #df_cryptoquant = pd.read_csv(cryptoquant_test_path)
     
-    df_price = pd.read_csv(price_test_path)
-    df_price.to_csv(price_test_path, index=False)
-    #df_merged_test = pd.merge(df_cryptoquant, df_price_test, on='start_time', how='left')
-    # Drop Open High Low Volume
-    #df_merged_test = util.dropColumn(df_merged_test)
-    #df_merged_test.to_csv(output_test_path, index=False)
-    #print(f"✅ 验证集合并完成: {output_test_path}")
+    #df_price = pd.read_csv(price_test_path)
+    #df_price.to_csv(price_test_path, index=False)
 
 
     # 验证集
     #await fetch_validation_set()
-    await fetch_price_data_validation()
+    #await fetch_price_data_validation()
     #cryptoquant_val_path = f"validation_sets/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val.csv"
-    price_val_path = f"validation_sets/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val.csv"
+    #price_val_path = f"validation_sets/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val.csv"
     #output_val_path = f"output/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val_merged.csv"
-    #df_cryptoquant_val = pd.read_csv(cryptoquant_val_path)
-    df_price_val = pd.read_csv(price_val_path)
-    df_price_val.to_csv(price_val_path, index=False)
-    #df_merged_val = pd.merge(df_cryptoquant_val, df_price_val, on='start_time', how='left')
-    # Drop Open High Low Volume
-    #df_merged_val = util.dropColumn(df_merged_val)
-    #df_merged_val.to_csv(output_val_path, index=False)
-    #print(f"✅ 验证集合并完成: {output_val_path}")
+    
 
 asyncio.run(main())
 
