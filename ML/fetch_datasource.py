@@ -293,7 +293,9 @@ async def main():
     price_test_path = f"src/{price_topic.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}.csv"
     #output_test_path = f"output/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_merged.csv"
     #df_cryptoquant = pd.read_csv(cryptoquant_test_path)
-    df_price_test = pd.read_csv(price_test_path)
+    
+    df_price = pd.read_csv(price_test_path)
+    df_price.to_csv(price_test_path, index=False)
     #df_merged_test = pd.merge(df_cryptoquant, df_price_test, on='start_time', how='left')
     # Drop Open High Low Volume
     #df_merged_test = util.dropColumn(df_merged_test)
@@ -309,6 +311,7 @@ async def main():
     #output_val_path = f"output/{TOPIC.replace('|', '_').replace('/','_').replace('?', '_').replace('&', '_').replace('-', '_').replace('=', '_')}_val_merged.csv"
     #df_cryptoquant_val = pd.read_csv(cryptoquant_val_path)
     df_price_val = pd.read_csv(price_val_path)
+    df_price_val.to_csv(price_val_path, index=False)
     #df_merged_val = pd.merge(df_cryptoquant_val, df_price_val, on='start_time', how='left')
     # Drop Open High Low Volume
     #df_merged_val = util.dropColumn(df_merged_val)
