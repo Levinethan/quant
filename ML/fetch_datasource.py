@@ -13,7 +13,7 @@ API_KEY = "3FOSdsLW7nQmT8X7a2nRFkBEIwnsQnkjauet8IdBzKB2QDN0"
 price_interval = '1h'
 coinglass_interval = '1h'
 crypto_interval = 'hour'
-under_asset = 'btc'
+under_asset = 'eth'
 rolling_window = 300
 
 # ---------------------- change exchange ----------------------
